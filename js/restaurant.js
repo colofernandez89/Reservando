@@ -18,9 +18,13 @@ class Restaurant {
         }
     }
 
+    //Tuve que corregir este método, ya que en la función original, la condición 'nuevaCalificacion < 10', 
+    //no permitía que la calificación fuera un 10, por lo que nunca iba a agregarse al array de calificaciones.
     calificar(nuevaCalificacion){
-        if (Number.isInteger(nuevaCalificacion) && nuevaCalificacion > 0 && nuevaCalificacion < 10) {
+        if (Number.isInteger(nuevaCalificacion) && typeof nuevaCalificacion === 'number' && !isNaN(nuevaCalificacion) && nuevaCalificacion > 0 && nuevaCalificacion <= 10) {
             this.calificaciones.push(nuevaCalificacion);
+        } else {
+            throw new Error();
         }
     }
 

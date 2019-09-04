@@ -185,23 +185,20 @@ class Aplicacion {
     // Las opciones "Default" y "Todos" de los filtros, tienen como propiedad val un 1 y un 0. En el caso de que el la propiedad val de alguno
     // de los filtros sea 0 o 1, se envía como filtro el valor null, para que el listado sepa que no tiene que filtrar por ese campo.
     filtrarRestaurantes(){
-        
-        if ($("#filtro-rubro option:selected").val() === "1" || $("#filtro-rubro option:selected").val() === "0") {
-            var filtroRubro = null;
-        } else {
-            var filtroRubro = $("#filtro-rubro option:selected").val();
+        let filtroRubro = null;
+        let filtroCiudad = null;
+        let filtroHorario = null;
+
+        if ($("#filtro-rubro option:selected").val() !== "1" && $("#filtro-rubro option:selected").val() !== "0") {
+            filtroRubro = $("#filtro-rubro option:selected").val();
         }
     
-        if ($("#filtro-ciudad option:selected").val() === "1" || $("#filtro-ciudad option:selected").val() === "0") {
-            var filtroCiudad = null;
-        } else {
-            var filtroCiudad = $("#filtro-ciudad option:selected").val();
+        if ($("#filtro-ciudad option:selected").val() !== "1" && $("#filtro-ciudad option:selected").val() !== "0") {
+            filtroCiudad = $("#filtro-ciudad option:selected").val();
         }
     
-        if ($("#filtro-horario option:selected").val() === "1" || $("#filtro-horario option:selected").val() === "0") {
-            var filtroHorario = null;
-        } else {
-            var  filtroHorario = $("#filtro-horario option:selected").val();
+        if ($("#filtro-horario option:selected").val() !== "1" && $("#filtro-horario option:selected").val() !== "0") {
+            filtroHorario = $("#filtro-horario option:selected").val();
         }
     
         let restaurantesFiltrados = this.listado.obtenerRestaurantes(filtroRubro, filtroCiudad, filtroHorario);
