@@ -1,3 +1,12 @@
+const sumar = (arreglo) => {
+   let sumatoria = arreglo.reduce((valorPrevio, valorActual) => valorPrevio + valorActual);
+    return sumatoria;}
+
+const calcularPromedio = (arreglo) => {
+    let promedio = sumar(arreglo) / arreglo.length;
+    return Math.round(promedio * 10) / 10;
+}
+
 class Restaurant {
     constructor(id, nombre, rubro, ubicacion, horarios, imagen, calificaciones){
         this.id = id;
@@ -10,12 +19,7 @@ class Restaurant {
     }
 
     reservarHorario(horarioReservado){
-        for (let i = 0; i < this.horarios.length; i++) {
-            if (this.horarios[i] === horarioReservado) {
-                this.horarios.splice(i, 1);
-                return;
-            }
-        }
+        this.horarios = this.horarios.filter(horario => horario !== horarioReservado);   
     }
 
     //Tuve que corregir este método, ya que en la función original, la condición 'nuevaCalificacion < 10', 
@@ -32,12 +36,7 @@ class Restaurant {
         if (this.calificaciones.length === 0) {
             return 0;
         } else {
-            let sumatoria = 0;
-            for (let i = 0; i < this.calificaciones.length; i++) {
-                sumatoria += this.calificaciones[i];
-            }
-            let promedio = sumatoria / this.calificaciones.length;
-            return Math.round(promedio * 10) / 10;
+               return calcularPromedio(this.calificaciones);
         }
     }
 }

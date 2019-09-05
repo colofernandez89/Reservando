@@ -1,3 +1,10 @@
+const eliminarElementosRepetidos = (array) => {
+    let elementosNoRepetidos = array.filter((elem, index, self) => {
+         return  index === self.indexOf(elem);
+     })
+         return elementosNoRepetidos.sort();
+ };
+
 class Listado {
     constructor(restaurantes){
         this.restaurantes = restaurantes;
@@ -31,66 +38,39 @@ class Listado {
         if(id > this.restaurantes.length)
         throw new Error();
 
-        for (let i = 0; i < this.restaurantes.length; i++) {
-            if (this.restaurantes[i].id === id) {
-                return this.restaurantes[i]
-            };
-        };
-        return "No se ha encontrado ningún restaurant";
+
+        let restaurantPorId = this.restaurantes.find((restaurant) => restaurant.id === id)
+            return restaurantPorId || "No se ha encontrado ningún restaurant";
     }
 
     //Obtiene todas las ciudades de los restaurantes sin repetidos
-    obtC(){
-    //Array donde se van a ir agregando las ciudades (van a estar repetidas)
-        let c = [];
+    obtenerCiudades(){
     //Se recorre el array de restaurantes y se va agregando al array creado, todas las ubicaciones o ciudades encontradas
-        for (let i = 0; i < this.restaurantes.length; i++) {
-            c.push(this.restaurantes[i].ubicacion);
-        }
+        let ciudadesObtenidas = this.restaurantes.map((restaurant) => restaurant.ubicacion);   
     //Se crea un nuevo array donde se van a agregar las ciudades pero sin repetirse
-        let c2 = c.filter(function(elem, index, self) {
-            return index === self.indexOf(elem);
-        });
-        return c2.sort();
+        return eliminarElementosRepetidos(ciudadesObtenidas);
     }
 
-    //Obtiene todos los rubros de los restaurantes sin repetidos. Su funcionamiento es similar a obtC()
-    obtR(){
-        let r = [];
-        for (let i = 0; i < this.restaurantes.length; i++) {
-            r.push(this.restaurantes[i].rubro);
-        }
+    //Obtiene todos los rubros de los restaurantes sin repetidos. Su funcionamiento es similar a obtenerCiudades()
+    obtenerRubros(){
+        let rubrosObtenidos = this.restaurantes.map((restaurant) => restaurant.rubro);
 
-        let r2 = r.filter(function(elem, index, self) {
-            return index === self.indexOf(elem);
-        });
-        return r2.sort();
+        return eliminarElementosRepetidos(rubrosObtenidos);
     }
 
     //Obtiene todos los horarios de los restaurantes (sin repetidos). Está funcionalidad es un poco más compleja ya que un restaurante
     //tiene un array de horarios. Al buscarlos todos vamos a pasar a tener un array de arrays que luego vamos a tener que 
     //convertir en uno solo
-    obtH(){
+    obtenerHorarios(){
     //En este array se van a cargar los arrays de horarios, que luego vamos convertir en un solo array
-        let arregloH = [];
-    //Recorremos el array de restaurantes y vamos agregando todos los array de horarios
-        for (let i = 0; i < this.restaurantes.length; i++) {
-            arregloH.push(this.restaurantes[i].horarios);
-        }
-
+        let arregloDeArreglosHorariosObtenidos = this.restaurantes.map((restaurant) => restaurant.horarios);
     //En este arreglo vamos a poner todos los horarios, uno por uno
-        let h = [];
-        arregloH.forEach(function(a) {
-            a.forEach(function(hor) {
-                h.push(hor)
-            });
-        });
+        let arregloHorariosAplastados = [];
 
-    //En este arreglo vamos a poner todos los horarios pero sin repetidos
-        let h2 = h.filter(function(elem, index, self) {
-            return index === self.indexOf(elem);
+        arregloDeArreglosHorariosObtenidos.forEach((arr) => {
+            arr.forEach((horario) => arregloHorariosAplastados.push(horario))
         });
-        return h2.sort();
+        return eliminarElementosRepetidos(arregloHorariosAplastados);
     }
 
     //Función que recibe los filtros que llegan desde el HTML y filtra el arreglo de restaurantes.
