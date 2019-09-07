@@ -91,9 +91,9 @@ describe("Listado", () => {
         })
         it("Debería arrojar un error cuando no se le pasa ningún id por parámetro.", () => {
             let listadoDeRestaurantes = [
-                     new Restaurant(1, "TAO Uptown", "Asiática", "Nueva York", ["13:00", "15:30", "18:00"], "../img/asiatica1.jpg", [6, 7, 9, 10, 5]),
-                     new Restaurant(2, "Mandarín Kitchen", "Asiática", "Londres", ["15:00", "14:30", "12:30"], "../img/asiatica2.jpg", [7, 7, 3, 9, 7]),
-                     new Restaurant(3, "Burgermeister", "Hamburguesa", "Berlín", ["11:30", "12:00", "22:30"], "../img/hamburguesa4.jpg", [5, 8, 4, 9, 9]),
+                new Restaurant(1, "TAO Uptown", "Asiática", "Nueva York", ["13:00", "15:30", "18:00"], "../img/asiatica1.jpg", [6, 7, 9, 10, 5]),
+                new Restaurant(2, "Mandarín Kitchen", "Asiática", "Londres", ["15:00", "14:30", "12:30"], "../img/asiatica2.jpg", [7, 7, 3, 9, 7]),
+                new Restaurant(3, "Burgermeister", "Hamburguesa", "Berlín", ["11:30", "12:00", "22:30"], "../img/hamburguesa4.jpg", [5, 8, 4, 9, 9]),
             ];
             let listado = new Listado(listadoDeRestaurantes);
             let fn = () => listado.buscarRestaurante();
@@ -101,9 +101,9 @@ describe("Listado", () => {
         })
         it("Debería arrojar un error cuando no existe un restaurant que coincida con el id pasado por parámetro.", () => {
             let listadoDeRestaurantes = [
-                        new Restaurant(1, "TAO Uptown", "Asiática", "Nueva York", ["13:00", "15:30", "18:00"], "../img/asiatica1.jpg", [6, 7, 9, 10, 5]),
-                        new Restaurant(2, "Mandarín Kitchen", "Asiática", "Londres", ["15:00", "14:30", "12:30"], "../img/asiatica2.jpg", [7, 7, 3, 9, 7]),
-                        new Restaurant(3, "Burgermeister", "Hamburguesa", "Berlín", ["11:30", "12:00", "22:30"], "../img/hamburguesa4.jpg", [5, 8, 4, 9, 9]),
+                new Restaurant(1, "TAO Uptown", "Asiática", "Nueva York", ["13:00", "15:30", "18:00"], "../img/asiatica1.jpg", [6, 7, 9, 10, 5]),
+                new Restaurant(2, "Mandarín Kitchen", "Asiática", "Londres", ["15:00", "14:30", "12:30"], "../img/asiatica2.jpg", [7, 7, 3, 9, 7]),
+                new Restaurant(3, "Burgermeister", "Hamburguesa", "Berlín", ["11:30", "12:00", "22:30"], "../img/hamburguesa4.jpg", [5, 8, 4, 9, 9]),
             ];
             let listado = new Listado(listadoDeRestaurantes);
             let fn = () => listado.buscarRestaurante(5);
@@ -171,6 +171,35 @@ describe("Listado", () => {
             let listado = new Listado(listadoDeRestaurantes);
             let fn = listado.obtenerRestaurantes("Ensalada", "Buenos Aires", "09:00");
             expect(fn.length).to.equal(0);
+        })
+    })
+})
+
+describe("Reserva", () => {
+    describe("constructor", () => {
+        it("Debería arrojar un error si el código de descuento pasado por parámetro NO es un string.", () => {
+            let reserva1 = () => new Reserva (new Date(2018, 7, 24, 11, 00), 8, 350, 15);
+            expect(reserva1).to.throw();
+        })
+    })
+    describe("calcularPrecioBase", () => {
+        it("Debería calcular correctamente el precio base de la reserva efectuada.", () => {
+            let reserva1 = new Reserva (new Date(2018, 7, 24, 11, 00), 8, 350, "DES1");
+            let reserva2 = new Reserva (new Date(2018, 7, 27, 14, 100), 2, 150, "DES200");
+            let fn1 = reserva1.calcularPrecioBase(reserva1);
+            let fn2 = reserva2.calcularPrecioBase(reserva2);
+            expect(fn1).to.equal(2800);
+            expect(fn2).to.equal(300);
+        })
+    })
+    describe("calcularPrecioFinal", () => {
+        it("Debería calcular correctamente el precio final de la reserva efectuada.", () => {
+            let reserva1 = new Reserva (new Date(2018, 7, 24, 11, 00), 8, 350, "DES1");
+            let reserva2 = new Reserva (new Date(2018, 7, 27, 14, 100), 2, 150, "DES200");
+            let fn1 = reserva1.calcularPrecioFinal(reserva1);
+            let fn2 = reserva2.calcularPrecioFinal(reserva2);
+            expect(fn1).to.equal(2450);
+            expect(fn2).to.equal(100);
         })
     })
 })
